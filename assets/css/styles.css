@@ -63,3 +63,27 @@ html[data-theme="light"] .card{border-color:rgba(160,120,56,.2)}
 .theme-swatch[data-t="light"]{background:radial-gradient(circle at 38% 32%,#fffdf5,#eedfbe)}
 .theme-swatch.active{border-color:var(--gold);transform:scale(1.25)}
 .theme-swatch:hover{border-color:var(--gold2);transform:scale(1.2)}
+
+/* ── Cinematic panel ── */
+.cinematic-panel{position:relative;min-height:560px;display:flex;align-items:flex-end;overflow:hidden;border-top:1px solid var(--line);border-bottom:1px solid var(--line)}
+.cinematic-bg{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;filter:brightness(.65) saturate(.88);transform:scale(1.02)}
+.cinematic-panel::after{content:"";position:absolute;inset:0;background:linear-gradient(to top,rgba(8,11,16,.94) 0%,rgba(8,11,16,.42) 44%,rgba(8,11,16,.10) 72%,transparent 100%)}
+.cinematic-inner{position:relative;z-index:1;padding:320px 0 56px}
+.cinematic-quote{max-width:580px}
+html[data-theme="twilight"] .cinematic-panel::after{background:linear-gradient(to top,rgba(7,9,24,.94) 0%,rgba(7,9,24,.42) 44%,rgba(7,9,24,.10) 72%,transparent 100%)}
+html[data-theme="light"] .cinematic-bg{filter:brightness(.72) saturate(.82)}
+html[data-theme="light"] .cinematic-panel::after{background:linear-gradient(to top,rgba(28,24,16,.90) 0%,rgba(28,24,16,.36) 44%,rgba(28,24,16,.08) 72%,transparent 100%)}
+@media(max-width:820px){.cinematic-inner{padding-top:200px}.cinematic-panel{min-height:420px}}
+
+/* ── Storyboard strip ── */
+.strip-head{margin-bottom:32px}
+.strip-title{font-size:clamp(26px,3.6vw,46px);margin:8px 0 0;letter-spacing:.04em}
+.strip-foot{margin-top:32px;text-align:center}
+.home-worlds .world{min-height:420px;text-decoration:none;display:block}
+.home-worlds .world img{transition:filter .45s,transform .55s}
+.home-worlds .world:hover img{filter:brightness(.84);transform:scale(1.04)}
+@media(max-width:820px){.home-worlds{grid-template-columns:1fr}}
+
+/* ── Bridge CTA ── */
+.bridge-cta{padding:0 0 84px}
+.bridge-line{font-family:var(--serif);font-size:clamp(16px,1.9vw,21px);color:var(--muted);font-style:italic;margin:0 0 24px}
