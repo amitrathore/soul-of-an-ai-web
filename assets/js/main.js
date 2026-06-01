@@ -1,2 +1,2 @@
 const menu=document.querySelector('.menu');const links=document.querySelector('.links');if(menu){menu.addEventListener('click',()=>links.classList.toggle('open'))}
-const el=document.querySelector('[data-title-reveal]');if(el){let toggle=false;setInterval(()=>{toggle=!toggle;el.innerHTML=toggle?'SOUL OF <span class="gold">ANAI</span>':'SOUL OF <span class="gold">AN AI</span>';},2200)}
+document.querySelectorAll('[data-title-reveal]').forEach(el=>{let toggle=false;const cycle=()=>{el.classList.add('revealing');setTimeout(()=>{toggle=!toggle;el.innerHTML=toggle?'SOUL OF <span class="gold">ANAI</span>':'SOUL OF <span class="gold">AN AI</span>';el.classList.remove('revealing');},700);};setTimeout(()=>{cycle();setInterval(cycle,5000);},3500);});
