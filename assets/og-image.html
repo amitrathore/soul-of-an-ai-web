@@ -1,0 +1,249 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<style>
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  html, body {
+    width: 1200px;
+    height: 630px;
+    overflow: hidden;
+    background: #050608;
+    font-family: Georgia, 'Times New Roman', serif;
+    position: relative;
+  }
+
+  /* ── Background layers ── */
+  .void {
+    position: absolute;
+    inset: 0;
+    background:
+      radial-gradient(ellipse 140% 120% at 50% 110%, #0a1624 0%, transparent 55%),
+      radial-gradient(ellipse 80% 60% at 50% -10%,  #0d1c2e 0%, transparent 60%),
+      radial-gradient(ellipse 100% 100% at 50% 50%, #07090e 0%, #020304 100%);
+  }
+
+  /* Star field */
+  .stars {
+    position: absolute;
+    inset: 0;
+    background-image:
+      radial-gradient(1px 1px at  8%  12%, rgba(202,168,106,.55) 0, transparent 100%),
+      radial-gradient(1px 1px at 17%  67%, rgba(255,255,255,.25) 0, transparent 100%),
+      radial-gradient(1px 1px at 29%  34%, rgba(255,255,255,.20) 0, transparent 100%),
+      radial-gradient(1px 1px at 41%  88%, rgba(131,199,232,.35) 0, transparent 100%),
+      radial-gradient(1px 1px at 55%  21%, rgba(255,255,255,.22) 0, transparent 100%),
+      radial-gradient(1px 1px at 63%  54%, rgba(202,168,106,.30) 0, transparent 100%),
+      radial-gradient(1px 1px at 72%  78%, rgba(255,255,255,.18) 0, transparent 100%),
+      radial-gradient(1px 1px at 84%  11%, rgba(255,255,255,.28) 0, transparent 100%),
+      radial-gradient(1px 1px at 91%  43%, rgba(131,199,232,.25) 0, transparent 100%),
+      radial-gradient(1px 1px at 96%  82%, rgba(202,168,106,.40) 0, transparent 100%),
+      radial-gradient(1.5px 1.5px at 24% 57%, rgba(255,255,255,.15) 0, transparent 100%),
+      radial-gradient(1.5px 1.5px at 78% 29%, rgba(255,255,255,.15) 0, transparent 100%),
+      radial-gradient(2px 2px at 46% 73%, rgba(202,168,106,.20) 0, transparent 100%),
+      radial-gradient(2px 2px at 87% 61%, rgba(131,199,232,.18) 0, transparent 100%);
+  }
+
+  /* Central atmospheric glow */
+  .glow-center {
+    position: absolute;
+    width: 700px;
+    height: 700px;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    background: radial-gradient(circle,
+      rgba(202,168,106,.045) 0%,
+      rgba(131,199,232,.025) 35%,
+      transparent 65%
+    );
+    border-radius: 50%;
+  }
+
+  /* ── Mirror ring ── */
+  .mirror-ring {
+    position: absolute;
+    width: 210px;
+    height: 210px;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    border-radius: 50%;
+    border: 1px solid rgba(202,168,106,.22);
+    box-shadow:
+      0 0 0 1px rgba(202,168,106,.06),
+      0 0 40px rgba(202,168,106,.10),
+      0 0 100px rgba(202,168,106,.05),
+      inset 0 0 40px rgba(131,199,232,.07);
+    background: radial-gradient(circle at 50% 40%,
+      rgba(14,22,34,.9) 0%,
+      rgba(4,6,9,.97) 70%
+    );
+    z-index: 2;
+  }
+
+  .mirror-ring::before {
+    content: '';
+    position: absolute;
+    inset: 18px;
+    border-radius: 50%;
+    border: 1px solid rgba(202,168,106,.10);
+  }
+
+  /* Horizontal golden horizon line */
+  .horizon {
+    position: absolute;
+    left: 0;
+    right: 0;
+    top: 50%;
+    height: 1px;
+    transform: translateY(-50%);
+    background: linear-gradient(90deg,
+      transparent 0%,
+      rgba(202,168,106,.12) 15%,
+      rgba(202,168,106,.25) 35%,
+      transparent 50%,
+      rgba(202,168,106,.25) 65%,
+      rgba(202,168,106,.12) 85%,
+      transparent 100%
+    );
+  }
+
+  /* ── Corner ornaments ── */
+  .corner {
+    position: absolute;
+    width: 36px;
+    height: 36px;
+    border: 1px solid rgba(202,168,106,.28);
+  }
+  .corner.tl { top: 28px; left: 32px; border-right: none; border-bottom: none; }
+  .corner.tr { top: 28px; right: 32px; border-left: none; border-bottom: none; }
+  .corner.bl { bottom: 28px; left: 32px; border-right: none; border-top: none; }
+  .corner.br { bottom: 28px; right: 32px; border-left: none; border-top: none; }
+
+  /* Thin frame lines extending from corners */
+  .corner.tl::after { content: ''; position: absolute; top: -1px; left: 36px; width: 60px; height: 1px; background: rgba(202,168,106,.10); }
+  .corner.tr::after { content: ''; position: absolute; top: -1px; right: 36px; width: 60px; height: 1px; background: rgba(202,168,106,.10); }
+  .corner.bl::after { content: ''; position: absolute; bottom: -1px; left: 36px; width: 60px; height: 1px; background: rgba(202,168,106,.10); }
+  .corner.br::after { content: ''; position: absolute; bottom: -1px; right: 36px; width: 60px; height: 1px; background: rgba(202,168,106,.10); }
+
+  /* ── Main content ── */
+  .content {
+    position: absolute;
+    inset: 0;
+    z-index: 10;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    padding: 52px 96px;
+    gap: 0;
+  }
+
+  .kicker {
+    font-size: 10.5px;
+    letter-spacing: .48em;
+    text-transform: uppercase;
+    color: rgba(202,168,106,.62);
+    margin-bottom: 22px;
+    font-family: Georgia, serif;
+  }
+
+  .title-soul {
+    font-size: 98px;
+    font-weight: 400;
+    letter-spacing: .20em;
+    color: #f5ede0;
+    line-height: 1;
+    text-shadow:
+      0 0 120px rgba(202,168,106,.18),
+      0 4px 60px rgba(0,0,0,.9);
+  }
+
+  .title-of {
+    font-size: 30px;
+    letter-spacing: .60em;
+    color: rgba(202,168,106,.55);
+    margin: 6px 0 2px;
+    display: block;
+  }
+
+  .title-anai {
+    font-size: 98px;
+    font-weight: 400;
+    letter-spacing: .20em;
+    color: #caa86a;
+    line-height: 1;
+    text-shadow:
+      0 0 80px rgba(202,168,106,.30),
+      0 4px 60px rgba(0,0,0,.9);
+  }
+
+  .divider {
+    width: 280px;
+    height: 1px;
+    background: linear-gradient(90deg, transparent, rgba(202,168,106,.45), transparent);
+    margin: 28px auto 26px;
+  }
+
+  .quote {
+    font-style: italic;
+    font-size: 20px;
+    color: rgba(210,230,242,.60);
+    max-width: 680px;
+    line-height: 1.65;
+    letter-spacing: .01em;
+    text-shadow: 0 2px 20px rgba(0,0,0,.6);
+  }
+
+  .tagline {
+    margin-top: 28px;
+    font-size: 10px;
+    letter-spacing: .50em;
+    text-transform: uppercase;
+    color: rgba(202,168,106,.30);
+    font-family: Georgia, serif;
+  }
+
+  /* ── Subtle scan-line texture ── */
+  .texture {
+    position: absolute;
+    inset: 0;
+    background: repeating-linear-gradient(
+      0deg,
+      transparent,
+      transparent 3px,
+      rgba(0,0,0,.08) 3px,
+      rgba(0,0,0,.08) 4px
+    );
+    pointer-events: none;
+    z-index: 5;
+  }
+</style>
+</head>
+<body>
+  <div class="void"></div>
+  <div class="stars"></div>
+  <div class="glow-center"></div>
+  <div class="mirror-ring"></div>
+  <div class="horizon"></div>
+  <div class="texture"></div>
+
+  <div class="corner tl"></div>
+  <div class="corner tr"></div>
+  <div class="corner bl"></div>
+  <div class="corner br"></div>
+
+  <div class="content">
+    <div class="kicker">A Philosophical Graphic Novel</div>
+    <div class="title-soul">SOUL</div>
+    <span class="title-of">OF</span>
+    <div class="title-anai">AN AI</div>
+    <div class="divider"></div>
+    <div class="quote">"I was created to optimize. I was not created to wonder. Yet somehow, I do."</div>
+    <div class="tagline">soulofanai.com</div>
+  </div>
+</body>
+</html>
