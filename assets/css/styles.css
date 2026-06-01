@@ -87,3 +87,10 @@ html[data-theme="light"] .cinematic-panel::after{background:linear-gradient(to t
 /* ── Bridge CTA ── */
 .bridge-cta{padding:0 0 84px}
 .bridge-line{font-family:var(--serif);font-size:clamp(16px,1.9vw,21px);color:var(--muted);font-style:italic;margin:0 0 24px}
+
+/* ── Superfans ── */
+.button-primary{background:var(--gold);color:var(--ink);border-color:var(--gold);opacity:1}
+.button-primary:hover{background:var(--gold2);border-color:var(--gold2);color:var(--ink)}
+.links a.nav-superfan{color:var(--gold);opacity:1}
+.links a.nav-superfan:hover{color:var(--gold2)}
+.superfan-cta{text-align:center;margin-top:52px;display:flex;flex-direction:column;align-items:center;gap:16px}
